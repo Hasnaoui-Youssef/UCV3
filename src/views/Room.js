@@ -6,8 +6,8 @@ import { GameStateContext, Status } from '../context/GameStateContext';
 export default function Room() {
   const gameState = useContext(GameStateContext);
   const roomId = useRoomIdContext();
-
-  const textAreaRef = useRef(null); 
+  const textAreaRef = useRef(null);
+  
   const copyToClipboard = () =>{
     const text = roomId;
     textAreaRef.current.value = text;
@@ -23,6 +23,7 @@ export default function Room() {
     <div className='room'>
       <div className='room-id'>
         <p>{roomId}</p>
+        <textarea ref={textAreaRef} style={{ display: 'none' }} />
         <button id='copy-room-id' onClick={copyToClipboard}> copy to clipboard</button>
       </div>
         {gameState.getStatus()===Status.LOBBY && <Lobby/>}

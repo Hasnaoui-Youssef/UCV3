@@ -41,8 +41,10 @@ app.get('/room:id', (req, res) => {
         res.status(404).send("Room not found");
     }
 });
+app.get('/', (_, res) => { res.send("Server is running") });
 
 io.on('connect',(socket)=>{
+    console.log("New connection");
     const clientId = socket.id;
     socket.on("joinRoom", (data) =>{
         const msg = handlePlayer(

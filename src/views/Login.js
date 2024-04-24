@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState} from 'react'
-export default function Login(onLogin) {
+
+export default function Login({onLogin}) {
 
   const [userName, setUserName] = useState("");
   const [roomId, setRoomId] = useState("");
