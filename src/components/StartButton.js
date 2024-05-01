@@ -1,7 +1,8 @@
 import React,{useContext} from 'react'
 import * as payload from '../helper';
-import {useSocket} from '../hooks/useSocket'
-import { useRoomIdContext } from '../context/RoomContext';
+//import {useSocket} from '../hooks/useSocket'
+import {socket} from '../socket'
+import { useRoom } from '../context/RoomContext';
 import { GameStateContext } from '../context/GameStateContext';
 export default function StartButton() {
   const gameState = useContext(GameStateContext);
@@ -12,12 +13,11 @@ export default function StartButton() {
     }
     return true;
   }
-  const socket = useSocket();
-  const roomId = useRoomIdContext();
+  const room = useRoom();
   const handleClick = () =>{
     if(canStartGame()){
       // server
-      socket.emit("message", payload.getStartGame(roomId));
+      socket.emit("message", payload.getStartGame(room.roomId));
       gameState.start();
     }else{
       alert("Not enough players to start the game")

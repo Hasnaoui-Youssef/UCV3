@@ -78,7 +78,7 @@ class GameState {
     removePlayer(clientId) {
       const player = this.clientToPlayer.get(clientId);
       const role = this.playerToRole.get(player);
-      if (role === Roles.CIVILIAN) {
+      if (role === Roles.Civilian) {
         this.remainingCivilians -= 1;
       } else {
         this.remainingVilains -= 1;

@@ -33,7 +33,7 @@ app.use((_, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
-app.get('/room:id', (req, res) => {
+app.get('/room', (req, res) => {
     const state = getState(req.params.id);
     if(state){
         res.send(JSON.stringify(state.getPlayers()));
@@ -59,6 +59,7 @@ io.on('connect',(socket)=>{
          io.to(data.roomId).emit("message", msg);
     });
     socket.on("createRoom",(username) =>{
+        console.log("Creating room");
         const roomId = createGameState();
         const msg = handlePlayer(
             {topic : "player",
@@ -69,7 +70,7 @@ io.on('connect',(socket)=>{
             roomId, clientId
         );
         socket.join(roomId);   
-        socket.emit("joinedRoom",roomId);
+        socket.emit("createdRoom",roomId);
         io.to(roomId).emit("message",msg);
     });
     socket.on("message", (message) => {

@@ -1,22 +1,22 @@
 import React, { useContext } from 'react'
-import { useSocket } from '../hooks/useSocket'
-import { useRoomIdContext } from '../context/RoomContext';
+import { socket } from '../socket';
+//import { kuseSocket } from '../hooks/useSocket'
+import { useRoom } from '../context/RoomContext';
 import { GameStateContext } from '../context/GameStateContext';
 // TODO : add limitations to the increment and decrement numbers using the current number of players in the game
 
 export default function Settings() {
-  const socket = useSocket();
   /**
    *@var {GameState} gameState 
    */
   const gameState = useContext(GameStateContext); 
-  const roomId = useRoomIdContext();
+  const room = useRoom();
   function updateServerValue(subtopic , data){
     socket.emit("message", {
       topic : 'settings',
       subtopic,
       data,
-      roomId
+      roomId: room.roomId
     });
   }
   const handleMrWhiteIncrement = () => {

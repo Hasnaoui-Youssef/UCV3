@@ -75,16 +75,43 @@ export function getStartGame(roomId){
     };
 }
 //TODO : add the rest of the functions and the logic for the message handling and transfer the function to the room.js file
-export function handleMessage(message){
-    if(message.topic === 'player'){
-        if(message.subtopic === 'update'){
-
+export function handleMessage(msg, gameState, setGameState){
+    const newState = {...gameState};
+    switch(msg.topic){
+        case 'player':{
+            switch(msg.subtopic){
+                case 'update':{
+                    newState.playerList = msg.data;
+                    break;
+                }
+                case 'word' :{
+                    
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+          
+          break;
         }
-    }else if(message.topic === 'settings'){
-        
-    }else if(message.topic === 'game'){
+        case 'settings':{
 
-    }else if(message.topic === 'vote'){
-        
-    }
+          break;
+        }
+        case 'game':{
+
+          break;
+        }
+        case 'vote':{
+
+          break;
+        }
+
+        default:{
+          throw new Error("Unknown message topic : ", msg.topic);
+        }
+      }
+
+      setGameState(newState);
 }
